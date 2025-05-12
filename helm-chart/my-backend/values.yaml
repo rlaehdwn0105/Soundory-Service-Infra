@@ -159,10 +159,6 @@ fileSecret:
 pvc:
   enabled: false
 
-serviceAccount:
-  create: false
-  annotations: {}
-  name: sondory-secret-sa
 
 nodeSelector: {}
 tolerations: []
