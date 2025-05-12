@@ -158,7 +158,9 @@ fileSecret:
 # =========================
 pvc:
   enabled: false
-
+  
+serviceAccount:
+  create: false
 
 nodeSelector: {}
 tolerations: []
