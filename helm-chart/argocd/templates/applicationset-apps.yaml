@@ -7,17 +7,17 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: git@github.com:vtatarin/lgtm.git
+      repoURL: https://github.com/rlaehdwn0105/Soundory-Service-Infra.git
       revision: main
       directories:
-      - path: argocd/apps/*
+      - path: helm-chart/*
   template:
     metadata:
       name: '{{"{{ path.basename }}"}}'
     spec:
       project: default
       source:
-        repoURL: git@github.com:vtatarin/lgtm.git
+        repoURL: https://github.com/rlaehdwn0105/Soundory-Service-Infra.git
         targetRevision: main
         path: '{{"{{ path }}"}}'
       destination:
