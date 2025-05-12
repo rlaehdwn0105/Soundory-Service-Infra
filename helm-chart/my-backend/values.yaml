@@ -137,21 +137,21 @@ configMap:
     AWS_IMAGE_ORIGIN_BUCKET_URL: https://soundory-origin.s3.ap-northeast-2.amazonaws.com/
     AWS_IMAGE_RESIZED_BUCKET_URL: https://soundory-resized.s3.ap-northeast-2.amazonaws.com/
     CF_ACCESS_KEY_ID: KTWE520OTSGSX
-    CF_PRIVATE_KEY_PATH: /app/mnt/secrets-store/cloudfront-private-key.pem
+    CF_PRIVATE_KEY_PATH: /app/src/keys/cloudfront-private-key.pem  
     NODE_ENV: development
     DIST_URL: https://de136mx4etflr.cloudfront.net
 
 # =========================
-# SecretProviderClass 설정
-# =========================#
-secretProviderClass:
-  name: sondory-backend-secret
-  mountPath: /app/mnt/secrets-store/
-  syncSecret:
-    enabled: true
-    name: sondory-backend-secret
+# Secret 설정
+# =========================
+envFromSecret: sondory-secret
 
-envFromSecret: sondory-backend-secret
+fileSecret:
+  name: cloudfront-key-secret
+  key: CF_PRIVATE_KEY
+  mountPath: /app/src/keys/cloudfront-private-key.pem
+  volumeName: cloudfront-key-volume
+
 
 # =========================
 # 기타 설정
