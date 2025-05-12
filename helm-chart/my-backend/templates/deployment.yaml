@@ -66,16 +66,14 @@ spec:
                 name: {{ .Values.envFromSecret }}
             {{- end }}
           volumeMounts:
-            - name: secrets-store
-              mountPath: {{ .Values.secretProviderClass.mountPath }}
+            - name: {{ .Values.fileSecret.volumeName }}
+              mountPath: {{ .Values.fileSecret.mountPath }}
+              subPath: {{ .Values.fileSecret.key }}
               readOnly: true
       volumes:
-        - name: secrets-store
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: {{ .Values.secretProviderClass.name }}
+        - name: {{ .Values.fileSecret.volumeName }}
+          secret:
+            secretName: {{ .Values.fileSecret.name }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
