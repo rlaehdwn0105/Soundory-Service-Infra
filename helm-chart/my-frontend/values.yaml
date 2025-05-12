@@ -6,7 +6,7 @@ replicaCount: 2
 image:
   repository: dongjukim123/soundory-fe
   pullPolicy: IfNotPresent
-  tag: 5
+  tag: 6
 
 container:
   port: 80  # Vite가 아닌 Nginx 기준 포트
