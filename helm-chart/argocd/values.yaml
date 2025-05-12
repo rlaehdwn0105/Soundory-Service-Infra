@@ -1,0 +1,28 @@
+argocd:
+  global:
+    logging:
+      format: json
+    domain: argocd.kimdongju.site
+
+  server:
+    ingress:
+      enabled: true
+      ingressClassName: alb
+      hosts:
+        - argocd.kimdongju.site
+      annotations:
+        kubernetes.io/ingress.class: alb
+        alb.ingress.kubernetes.io/scheme: internet-facing
+        alb.ingress.kubernetes.io/group.name: platform-alb-group
+        alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+        alb.ingress.kubernetes.io/success-codes: '200'
+        alb.ingress.kubernetes.io/target-type: ip
+        external-dns.alpha.kubernetes.io/hostname: argocd.kimdongju.site
+      paths:
+        - /
+      pathType: Prefix
+      port: 80
+
+    metrics:
+      enabled: true
+

@@ -1,0 +1,177 @@
+# =========================
+# Deployment 관련 설정
+# =========================
+replicaCount: 2
+
+image:
+  repository: dongjukim123/soundory-be
+  pullPolicy: IfNotPresent
+  tag: 182
+
+container:
+  port: 8001
+
+terminationGracePeriodSeconds: 60
+
+resources:
+  limits:
+    memory: 512Mi
+    cpu: 500m
+  requests:
+    memory: 256Mi
+    cpu: 250m
+
+podSecurityContext:
+  runAsUser: 0
+  fsGroup: 3000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  privileged: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: false
+
+podAnnotations: {}
+
+# =========================
+# Service (Production)
+# =========================
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8001
+
+# =========================
+# Service (Preview)
+# =========================
+previewService:
+  enabled: true
+  port: 80
+  targetPort: 8001
+  type: ClusterIP
+
+# =========================
+# Ingress (Production)
+# =========================
+ingress:
+  enabled: true
+  className: "alb"
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: soundory-group
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/success-codes: '200,302'
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+    external-dns.alpha.kubernetes.io/hostname: kimdongju.site
+  hosts:
+    - host: kimdongju.site
+      paths:
+        - path: /api
+          pathType: Prefix
+  tls: []
+
+# =========================
+# Ingress (Preview)
+# =========================
+previewIngress:
+  enabled: true
+  className: "alb"
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: soundory-group
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/success-codes: '200,302'
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+    external-dns.alpha.kubernetes.io/hostname: preview.kimdongju.site
+  hosts:
+    - host: preview.kimdongju.site
+      paths:
+        - path: /api
+          pathType: Prefix
+  tls: []
+
+# =========================
+# HPA 설정
+# =========================
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+
+# =========================
+# Health Check 설정
+# =========================
+probes:
+  liveness:
+    enabled: true
+    path: /health
+  readiness:
+    enabled: true
+    path: /health
+
+metrics:
+  enabled: false
+  path: /metrics
+
+# =========================
+# ConfigMap 설정
+# =========================
+configMap:
+  enabled: true
+  data:
+    DB_HOST: db-33rje8-kr.vpc-pub-cdb.ntruss.com
+    DB_PORT: "3306"
+    DB_NAME: kdj
+    EMAIL: rlaehdwn0105@gmail.com
+    SERVER_URL: http://kimdongju.site
+    AWS_REGION: ap-northeast-2
+    AWS_AUDIO_BUCKET: soundory-audio
+    AWS_IMAGE_ORIGIN_BUCKET: soundory-origin
+    AWS_IMAGE_RESIZED_BUCKET: soundory-resized
+    AWS_AUDIO_BUCKET_URL: https://soundory-audio.s3.ap-northeast-2.amazonaws.com/
+    AWS_IMAGE_ORIGIN_BUCKET_URL: https://soundory-origin.s3.ap-northeast-2.amazonaws.com/
+    AWS_IMAGE_RESIZED_BUCKET_URL: https://soundory-resized.s3.ap-northeast-2.amazonaws.com/
+    CF_ACCESS_KEY_ID: KTWE520OTSGSX
+    CF_PRIVATE_KEY_PATH: /app/mnt/secrets-store/cloudfront-private-key.pem
+    NODE_ENV: development
+    DIST_URL: https://de136mx4etflr.cloudfront.net
+
+# =========================
+# SecretProviderClass 설정
+# =========================#
+secretProviderClass:
+  name: sondory-backend-secret
+  mountPath: /app/mnt/secrets-store/
+  syncSecret:
+    enabled: true
+    name: sondory-backend-secret
+
+envFromSecret: sondory-backend-secret
+
+# =========================
+# 기타 설정
+# =========================
+pvc:
+  enabled: false
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: sondory-secret-sa
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+pdb:
+  enabled: false
+  minAvailable: 1

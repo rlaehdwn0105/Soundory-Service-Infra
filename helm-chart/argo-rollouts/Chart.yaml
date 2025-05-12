@@ -1,0 +1,13 @@
+apiVersion: v2
+name: argo-rollouts
+description: Umbrella chart for Argo Rollouts
+type: application
+version: 0.1.0
+appVersion: v1.8.2
+
+dependencies:
+  - name: argo-rollouts
+    alast: argo-rollouts
+    version: ~2.39.5
+    repository: https://argoproj.github.io/argo-helm
+    

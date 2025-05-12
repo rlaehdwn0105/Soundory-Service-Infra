@@ -1,0 +1,43 @@
+{{- if .Values.previewIngress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "my-backend.fullname" . }}-preview
+  labels:
+    {{- include "my-backend.labels" . | nindent 4 }}
+  {{- with .Values.previewIngress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.previewIngress.className }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  {{- if .Values.previewIngress.tls }}
+  tls:
+    {{- range .Values.previewIngress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  rules:
+    {{- range .Values.previewIngress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            {{- with .pathType }}
+            pathType: {{ . }}
+            {{- end }}
+            backend:
+              service:
+                name: {{ include "my-backend.fullname" $ }}-preview
+                port:
+                  number: {{ $.Values.previewService.port }}
+          {{- end }}
+    {{- end }}
+{{- end }}
