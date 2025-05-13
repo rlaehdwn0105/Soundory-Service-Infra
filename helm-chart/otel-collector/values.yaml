@@ -41,7 +41,7 @@ otel-collector:
           insecure: true
 
       loki:
-        endpoint: http://loki-gateway/loki/api/v1/push
+        endpoint: http://loki-gateway.loki.svc.cluster.local/loki/api/v1/push
         default_labels_enabled:
           exporter: true
           job: true
