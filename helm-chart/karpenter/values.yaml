@@ -1,0 +1,25 @@
+karpenter:
+  serviceMonitor:
+    enabled: true
+  serviceAccount:
+    create: true
+    name: karpenter
+    annotations:                  
+      eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/karpenter-controller-sa-role
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: karpenter.sh/nodepool
+                operator: DoesNotExist
+          
+  priorityClassName: system-cluster-critical
+  logConfig:
+    logEncoding: json
+  settings:
+    clusterName: soundory-cluster
+
+
+
