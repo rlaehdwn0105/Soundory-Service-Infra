@@ -1,0 +1,41 @@
+kube-prometheus-stack:
+  extraObjects:
+    - apiVersion: scheduling.k8s.io/v1
+      kind: PriorityClass
+      metadata:
+        name: node-exporter-priority
+      value: 100000000
+      globalDefault: false
+      description: "Ensure node-exporter DaemonSet preempts less critical pods"
+
+  alertmanager:
+    enabled: false
+
+  grafana:
+    enabled: false
+
+  prometheus:
+    enabled: true
+    prometheusSpec:
+      retention: 7d
+      serviceMonitorSelectorNilUsesHelmValues: true
+      podMonitorSelectorNilUsesHelmValues: true
+      ruleSelectorNilUsesHelmValues: true
+      enableRemoteWriteReceiver: true
+      remoteWrite:
+        - url: http://mimir-nginx.lgtm.svc.cluster.local/api/v1/push
+          headers:
+            X-Scope-OrgID: prometheus
+          queueConfig:
+            maxSamplesPerSend: 1000
+            maxShards: 200
+            capacity: 2500
+
+  kubeStateMetrics:
+    enabled: true
+
+prometheus-node-exporter:
+  enabled: true
+  priorityClassName: node-exporter-priority
+  tolerations:
+    - operator: "Exists"

@@ -1,0 +1,11 @@
+apiVersion: v2
+name: tempo
+description: Umbrella chart for tempo
+type: application
+version: 0.1.0
+appVersion: 2.6.0
+dependencies:
+  - name: tempo-distributed
+    version: 1.38.3
+    repository: https://grafana.github.io/helm-charts
+    alias: tempo
