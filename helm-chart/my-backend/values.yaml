@@ -6,7 +6,7 @@ replicaCount: 2
 image:
   repository: dongjukim123/soundory-be
   pullPolicy: IfNotPresent
-  tag: 188
+  tag: 189
 
 container:
   port: 8001
