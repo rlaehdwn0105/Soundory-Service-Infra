@@ -7,7 +7,7 @@ tempo:
     create: true
     name: tempo
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/tempo-role
+      eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/tempo-sa-role
 
   storage:
     trace:
@@ -15,7 +15,7 @@ tempo:
       s3:
         endpoint: s3.ap-northeast-2.amazonaws.com
         region: ap-northeast-2
-        bucket: sondory-tempo
+        bucket: soundory-tempo
 
   traces:
     otlp:

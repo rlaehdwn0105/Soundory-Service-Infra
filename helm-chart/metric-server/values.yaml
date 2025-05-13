@@ -1,0 +1,8 @@
+metrics-server:
+  serviceAccount:
+    create: true
+    name: metrics-server-sa
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/metrics-server-sa-role
+  serviceMonitor:
+    enabled: true

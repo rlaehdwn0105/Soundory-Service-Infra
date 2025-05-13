@@ -1,10 +1,9 @@
-# values.yaml
 mimir-distributed:
   serviceAccount:
     create: true
     name: mimir
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/mimir-role
+      eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/mimir-sa-role
 
   mimir:
     structuredConfig:
@@ -14,50 +13,53 @@ mimir-distributed:
           backend: s3
           s3:
             endpoint: s3.ap-northeast-2.amazonaws.com
-            bucket_name: sondory-mimir
+            bucket_name: soundory-mimir
             region: ap-northeast-2
       blocks_storage:
         s3:
-          bucket_name: sondory-mimir
+          bucket_name: soundory-mimir
       alertmanager_storage:
         s3:
-          bucket_name: sondory-mimir-alertmanager
+          bucket_name: soundory-mimir-alertmanager
       ruler_storage:
         s3:
-          bucket_name: sondory-mimir-ruler
+          bucket_name: soundory-mimir-ruler
 
   ingester:
     persistentVolume:
       enabled: true
-      storageClass: gp3
+      storageClass: ebs
       size: 10Gi
 
   store_gateway:
     persistentVolume:
       enabled: true
-      storageClass: gp3
+      storageClass: ebs
       size: 10Gi
 
   compactor:
     persistentVolume:
       enabled: true
-      storageClass: gp3
+      storageClass: ebs
       size: 10Gi
 
   alertmanager:
     persistentVolume:
       enabled: true
-      storageClass: gp3
+      storageClass: ebs
       size: 5Gi
 
   ruler:
     persistentVolume:
       enabled: true
-      storageClass: gp3
+      storageClass: ebs
       size: 5Gi
 
   minio:
     enabled: false
+
+  metaMonitoring:
+    serviceMonitor: enabled
 
   runtimeConfig:
     overrides:

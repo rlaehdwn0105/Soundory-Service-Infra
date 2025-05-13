@@ -15,6 +15,3 @@ grafana:
 
   persistence:
     enabled: false
-
-  adminUser: admin
-  adminPassword: admin1234

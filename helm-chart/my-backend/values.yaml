@@ -1,6 +1,4 @@
-# =========================
-# Deployment 관련 설정
-# =========================
+### Deployment
 replicaCount: 2
 
 image:
@@ -35,42 +33,57 @@ securityContext:
 
 podAnnotations: {}
 
+### toleration & affinity
 nodeSelector: {}
 tolerations:
   - key: "node"
     operator: "Equal"
     value: "service"
     effect: "NoSchedule"
-# affinity:
-#   nodeAffinity:
-#     requiredDuringSchedulingIgnoredDuringExecution:
-#       nodeSelectorTerms:
-#         - matchExpressions:
-#             - key: node-role
-#               operator: In
-#               values:
-#                 - service
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role
+              operator: In
+              values:
+                - service
 
-# =========================
-# Service (Production)
-# =========================
+### Health Check
+probes:
+  liveness:
+    enabled: true
+    path: /health
+  readiness:
+    enabled: true
+    path: /health
+
+metrics:
+  enabled: false
+  path: /metrics
+
+### HPA
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 18
+  targetCPUUtilizationPercentage: 50
+
+### Service (Production)
 service:
   type: ClusterIP
   port: 80
   targetPort: 8001
 
-# =========================
-# Service (Preview)
-# =========================
+### Service (Preview)
 previewService:
   enabled: true
   port: 80
   targetPort: 8001
   type: ClusterIP
 
-# =========================
-# Ingress (Production)
-# =========================
+### Ingress (Production)
 ingress:
   enabled: true
   className: "alb"
@@ -89,9 +102,7 @@ ingress:
           pathType: Prefix
   tls: []
 
-# =========================
-# Ingress (Preview)
-# =========================
+### Ingress (Preview)
 previewIngress:
   enabled: true
   className: "alb"
@@ -110,33 +121,7 @@ previewIngress:
           pathType: Prefix
   tls: []
 
-# =========================
-# HPA 설정
-# =========================
-autoscaling:
-  enabled: true
-  minReplicas: 2
-  maxReplicas: 18
-  targetCPUUtilizationPercentage: 50
-
-# =========================
-# Health Check 설정
-# =========================
-probes:
-  liveness:
-    enabled: true
-    path: /health
-  readiness:
-    enabled: true
-    path: /health
-
-metrics:
-  enabled: false
-  path: /metrics
-
-# =========================
-# ConfigMap 설정
-# =========================
+### ConfigMap
 configMap:
   enabled: true
   data:
@@ -157,9 +142,7 @@ configMap:
     NODE_ENV: development
     DIST_URL: https://de136mx4etflr.cloudfront.net
 
-# =========================
-# Secret 설정
-# =========================
+### Secret 
 envFromSecret: sondory-secret
 
 fileSecret:
@@ -168,16 +151,12 @@ fileSecret:
   mountPath: /app/src/keys/cloudfront-private-key.pem
   volumeName: cloudfront-key-volume
 
-
-# =========================
-# 기타 설정
-# =========================
+### Misc
 pvc:
   enabled: false
   
 serviceAccount:
   create: false
-
 
 imagePullSecrets: []
 nameOverride: ""

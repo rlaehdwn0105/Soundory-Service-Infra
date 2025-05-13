@@ -1,0 +1,8 @@
+external-dns:
+  serviceAccount:
+    create: true
+    name: external-dns-sa
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/external-dns-sa-role
+  serviceMonitor:
+    enabled: true

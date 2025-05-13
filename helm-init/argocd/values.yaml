@@ -1,0 +1,4 @@
+argocd:
+  server:
+    metrics:
+      enabled: true

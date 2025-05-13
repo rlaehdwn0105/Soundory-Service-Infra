@@ -1,6 +1,4 @@
-# =========================
-# Deployment 설정
-# =========================
+### Deployment
 replicaCount: 2
 
 image:
@@ -9,7 +7,7 @@ image:
   tag: 7
 
 container:
-  port: 80  # Vite가 아닌 Nginx 기준 포트
+  port: 80  
 
 terminationGracePeriodSeconds: 10
 
@@ -21,45 +19,49 @@ resources:
     memory: 64Mi
     cpu: 50m
 
+### toleration & affinity
 nodeSelector: {}
 tolerations:
   - key: "node"
     operator: "Equal"
     value: "service"
     effect: "NoSchedule"
-# affinity:
-#   nodeAffinity:
-#     requiredDuringSchedulingIgnoredDuringExecution:
-#       nodeSelectorTerms:
-#         - matchExpressions:
-#             - key: node-role
-#               operator: In
-#               values:
-#                 - service
-
-# Nginx는 readOnly로 돌리면 /var/cache/nginx 에러가 남
-#podSecurityContext:
-# runAsUser: 101
-#  fsGroup: 101
-
-# 필요 시 주석처리하거나 제거 가능
-# securityContext:
-#   allowPrivilegeEscalation: false
-#   readOnlyRootFilesystem: true
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role
+              operator: In
+              values:
+                - service
 
 podAnnotations: {}
 
-# =========================
-# Service 설정
-# =========================
+### Health Check
+probes:
+  liveness:
+    enabled: false
+    path: /
+  readiness:
+    enabled: false
+    path: /
+
+### HPA
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 30
+  targetMemoryUtilizationPercentage: 50
+
+### Service
 service:
   type: ClusterIP
   port: 80
   targetPort: 80
-
-# =========================
-# Ingress 설정
-# =========================
+  
+### Ingress
 ingress:
   enabled: true
   className: "alb"
@@ -79,30 +81,7 @@ ingress:
           pathType: Prefix
   tls: []
 
-# =========================
-# HPA 설정
-# =========================
-autoscaling:
-  enabled: true
-  minReplicas: 1
-  maxReplicas: 3
-  targetCPUUtilizationPercentage: 30
-  targetMemoryUtilizationPercentage: 50
-
-# =========================
-# 헬스체크
-# =========================
-probes:
-  liveness:
-    enabled: false
-    path: /
-  readiness:
-    enabled: false
-    path: /
-
-# =========================
-# 기타 설정
-# =========================
+### Misc
 pvc:
   enabled: false
 

@@ -1,0 +1,11 @@
+apiVersion: v2
+name: metrics-server
+description: Umbrella chart for Metrics Server
+version: 0.1.0
+appVersion: 0.7.2
+type: application
+dependencies:
+  - name: metrics-server
+    alias: metrics-server
+    version: 3.12.2
+    repository: https://kubernetes-sigs.github.io/metrics-server

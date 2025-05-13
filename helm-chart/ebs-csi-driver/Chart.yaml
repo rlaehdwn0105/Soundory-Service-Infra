@@ -1,0 +1,11 @@
+apiVersion: v2
+name: aws-ebs-csi-driver
+description: Umbrella chart for AWS EBS CSI Driver
+version: 0.1.0
+appVersion: 1.43.0
+type: application
+dependencies:
+  - name: aws-ebs-csi-driver
+    alias: aws-ebs-csi-driver
+    version: 2.43.0
+    repository: https://kubernetes-sigs.github.io/aws-ebs-csi-driver

@@ -5,7 +5,7 @@ loki:
     create: true
     name: loki
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/loki-role
+      eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/loki-sa-role
   loki:
     schemaConfig:
       configs:
@@ -22,7 +22,7 @@ loki:
         active_index_directory: /var/loki/index
         cache_location: /var/loki/index_cache
       aws:
-        bucketnames: sondory-loki
+        bucketnames: soundory-loki
         s3: s3://ap-northeast-2
 
     structuredConfig:

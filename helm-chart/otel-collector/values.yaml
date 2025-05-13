@@ -2,20 +2,13 @@ otel-collector:
   image:
     repository: otel/opentelemetry-collector-contrib
     tag: latest
-
+  serviceMonitor:
+    enabled: true
   mode: deployment
   replicaCount: 1
 
   service:
     type: ClusterIP
-
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 200m
-      memory: 256Mi
 
   config:
     receivers:
