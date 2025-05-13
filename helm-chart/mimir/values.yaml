@@ -1,0 +1,77 @@
+# values.yaml
+mimir-distributed:
+  serviceAccount:
+    create: true
+    name: mimir
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/mimir-role
+
+  mimir:
+    structuredConfig:
+      multitenancy_enabled: true 
+      common:
+        storage:
+          backend: s3
+          s3:
+            endpoint: s3.ap-northeast-2.amazonaws.com
+            bucket_name: sondory-mimir
+            region: ap-northeast-2
+      blocks_storage:
+        s3:
+          bucket_name: sondory-mimir
+      alertmanager_storage:
+        s3:
+          bucket_name: sondory-mimir
+      ruler_storage:
+        s3:
+          bucket_name: sondory-mimir
+
+  ingester:
+    persistentVolume:
+      enabled: true
+      storageClass: gp3
+      size: 10Gi
+
+  store_gateway:
+    persistentVolume:
+      enabled: true
+      storageClass: gp3
+      size: 10Gi
+
+  compactor:
+    persistentVolume:
+      enabled: true
+      storageClass: gp3
+      size: 10Gi
+
+  alertmanager:
+    persistentVolume:
+      enabled: true
+      storageClass: gp3
+      size: 5Gi
+
+  ruler:
+    persistentVolume:
+      enabled: true
+      storageClass: gp3
+      size: 5Gi
+
+  minio:
+    enabled: false
+
+  runtimeConfig:
+    overrides:
+      prometheus:
+        ingestion_rate: 100000
+        ingestion_burst_size: 1000000
+        max_global_series_per_user: 1500000
+
+      otel-metric:
+        ingestion_rate: 100000
+        ingestion_burst_size: 1000000
+        max_global_series_per_user: 1500000
+
+      tempo:
+        ingestion_rate: 100000
+        ingestion_burst_size: 1000000
+        max_global_series_per_user: 1500000

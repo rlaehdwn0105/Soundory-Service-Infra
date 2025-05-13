@@ -1,0 +1,11 @@
+apiVersion: v2
+name: mimir
+description: Umbrella chart for Mimir
+version: 0.1.0
+appVersion: r339
+type: application
+dependencies:
+  - name: mimir-distributed
+    alias: mimir-distributed
+    version: 5.8.0-weekly.339
+    repository: https://grafana.github.io/helm-charts
