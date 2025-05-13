@@ -168,15 +168,15 @@ tolerations:
     operator: "Equal"
     value: "service"
     effect: "NoSchedule"
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: node-role
-              operator: In
-              values:
-                - service
+# affinity:
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: node-role
+#               operator: In
+#               values:
+#                 - service
 
 imagePullSecrets: []
 nameOverride: ""
