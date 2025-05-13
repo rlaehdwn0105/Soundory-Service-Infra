@@ -22,9 +22,11 @@ mimir-distributed:
       alertmanager_storage:
         s3:
           bucket_name: sondory-mimir
+          prefix: "alertmanager"
       ruler_storage:
         s3:
           bucket_name: sondory-mimir
+          prefix: "ruler"
 
   ingester:
     persistentVolume:
