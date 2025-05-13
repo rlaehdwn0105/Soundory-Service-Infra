@@ -35,6 +35,22 @@ securityContext:
 
 podAnnotations: {}
 
+nodeSelector: {}
+tolerations:
+  - key: "node"
+    operator: "Equal"
+    value: "service"
+    effect: "NoSchedule"
+# affinity:
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: node-role
+#               operator: In
+#               values:
+#                 - service
+
 # =========================
 # Service (Production)
 # =========================
@@ -162,21 +178,6 @@ pvc:
 serviceAccount:
   create: false
 
-nodeSelector: {}
-tolerations:
-  - key: "node"
-    operator: "Equal"
-    value: "service"
-    effect: "NoSchedule"
-# affinity:
-#   nodeAffinity:
-#     requiredDuringSchedulingIgnoredDuringExecution:
-#       nodeSelectorTerms:
-#         - matchExpressions:
-#             - key: node-role
-#               operator: In
-#               values:
-#                 - service
 
 imagePullSecrets: []
 nameOverride: ""
