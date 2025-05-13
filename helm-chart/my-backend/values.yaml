@@ -163,7 +163,11 @@ serviceAccount:
   create: false
 
 nodeSelector: {}
-tolerations: []
+tolerations:
+  - key: "node"
+    operator: "Equal"
+    value: "service"
+    effect: "NoSchedule"
 affinity: {}
 
 imagePullSecrets: []
