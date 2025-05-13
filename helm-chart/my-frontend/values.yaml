@@ -21,6 +21,22 @@ resources:
     memory: 64Mi
     cpu: 50m
 
+nodeSelector: {}
+tolerations:
+  - key: "node"
+    operator: "Equal"
+    value: "service"
+    effect: "NoSchedule"
+# affinity:
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: node-role
+#               operator: In
+#               values:
+#                 - service
+
 # Nginx는 readOnly로 돌리면 /var/cache/nginx 에러가 남
 #podSecurityContext:
 # runAsUser: 101
@@ -94,22 +110,6 @@ serviceAccount:
   create: false
   annotations: {}
   name: ""
-
-nodeSelector: {}
-tolerations:
-  - key: "node"
-    operator: "Equal"
-    value: "service"
-    effect: "NoSchedule"
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: node-role
-              operator: In
-              values:
-                - service
 
 imagePullSecrets: []
 nameOverride: ""
