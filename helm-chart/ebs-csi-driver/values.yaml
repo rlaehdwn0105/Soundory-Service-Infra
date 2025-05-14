@@ -5,9 +5,9 @@ aws-ebs-csi-driver:
     enableMetrics: true
     serviceAccount:
       create: true
-      name: ebs-csi-controller-sa
+      name: ebs-csi-driver-sa
       annotations:
-        eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/ebs-csi-controller-sa-role
+        eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/ebs-csi-driver-sa-role
   storageClasses:
     - name: ebs
       annotations:
