@@ -6,7 +6,7 @@ metadata:
 spec:
   amiSelectorTerms:
     - alias: al2@latest
-  role: arn:aws:iam::880076045111:role/KarpenterNodeRole-soundory-cluster
+  role: arn:aws:iam::880076045111:role/service-eks-node-group-2025051405442084470000000b
   subnetSelectorTerms:
     - tags:
         karpenter.sh/discovery: soundory-cluster

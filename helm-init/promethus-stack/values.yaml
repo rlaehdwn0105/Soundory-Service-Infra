@@ -14,7 +14,7 @@ kube-prometheus-stack:
       ruleSelectorNilUsesHelmValues: true
       enableRemoteWriteReceiver: true
       remoteWrite:
-        - url: http://mimir-nginx.lgtm.svc.cluster.local/api/v1/push
+        - url: http://mimir-nginx.mimir.svc.cluster.local/api/v1/push
           headers:
             X-Scope-OrgID: prometheus
           queueConfig:
