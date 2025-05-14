@@ -5,6 +5,10 @@ mimir-distributed:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::880076045111:role/mimir-sa-role
 
+  metaMonitoring:
+    serviceMonitor:
+      enabled: true
+
   mimir:
     structuredConfig:
       multitenancy_enabled: true 
@@ -57,9 +61,6 @@ mimir-distributed:
 
   minio:
     enabled: false
-
-  metaMonitoring:
-    serviceMonitor: true
 
   runtimeConfig:
     overrides:
