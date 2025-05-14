@@ -59,7 +59,7 @@ mimir-distributed:
     enabled: false
 
   metaMonitoring:
-    serviceMonitor: enabled
+    serviceMonitor: true
 
   runtimeConfig:
     overrides:
