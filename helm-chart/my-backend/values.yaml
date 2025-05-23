@@ -19,19 +19,19 @@ resources:
     memory: 256Mi
     cpu: 250m
 
-podSecurityContext:
-  runAsUser: 0
-  fsGroup: 3000
+#podSecurityContext:
+#  runAsUser: 0
+#  fsGroup: 3000
 
-securityContext:
-  allowPrivilegeEscalation: false
-  privileged: false
-  capabilities:
-    drop:
-      - ALL
-  readOnlyRootFilesystem: false
+#securityContext:
+#  allowPrivilegeEscalation: false
+#  privileged: false
+#  capabilities:
+#    drop:
+#      - ALL
+#  readOnlyRootFilesystem: false
 
-podAnnotations: {}
+
 
 ### toleration & affinity
 nodeSelector: {}
@@ -49,6 +49,8 @@ affinity:
               operator: In
               values:
                 - service
+
+podAnnotations: {}
 
 ### Health Check
 probes:
@@ -157,6 +159,8 @@ pvc:
   
 serviceAccount:
   create: false
+  annotations: {}
+  name: ""
 
 imagePullSecrets: []
 nameOverride: ""
