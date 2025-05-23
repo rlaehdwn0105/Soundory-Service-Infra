@@ -4,7 +4,7 @@ replicaCount: 2
 image:
   repository: dongjukim123/soundory-fe
   pullPolicy: IfNotPresent
-  tag: 7
+  tag: 6
 
 container:
   port: 80  
