@@ -156,7 +156,7 @@ configMap:
     AWS_IMAGE_RESIZED_BUCKET_URL: https://d1bkhpnpv1ny2t.cloudfront.net/
     CF_ACCESS_KEY_ID: KTWE520OTSGSX
     CF_PRIVATE_KEY_PATH: /app/src/keys/cloudfront-private-key.pem  
-    NODE_ENV: production
+    NODE_ENV: development
     DIST_URL: https://de136mx4etflr.cloudfront.net
 
 ### Secret 
