@@ -57,9 +57,11 @@ probes:
   liveness:
     enabled: true
     path: /health
+    port: 8001
   readiness:
     enabled: true
     path: /health
+    port: 8001
 
 metrics:
   enabled: false
