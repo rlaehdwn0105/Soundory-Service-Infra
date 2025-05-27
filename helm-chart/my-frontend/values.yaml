@@ -69,17 +69,21 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: soundory-group
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/success-codes: '200,302'
     alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:880076045111:certificate/b08ddabe-0314-42dc-bdbf-8701d3993c69
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
     external-dns.alpha.kubernetes.io/hostname: kimdongju.site
-    
+
   hosts:
     - host: kimdongju.site
       paths:
         - path: /
           pathType: Prefix
-  tls: []
+  tls:
+    - hosts:
+        - kimdongju.site
 
 ### Misc
 pvc:

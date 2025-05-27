@@ -93,7 +93,9 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: soundory-group
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:880076045111:certificate/b08ddabe-0314-42dc-bdbf-8701d3993c69
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/success-codes: '200,302'
     alb.ingress.kubernetes.io/healthcheck-path: /health
     external-dns.alpha.kubernetes.io/hostname: kimdongju.site
@@ -102,8 +104,9 @@ ingress:
       paths:
         - path: /api
           pathType: Prefix
-  tls: []
-
+  tls:
+    - hosts:
+        - kimdongju.site
 ### Ingress (Preview)
 previewIngress:
   enabled: true
@@ -112,16 +115,20 @@ previewIngress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: soundory-group
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/success-codes: '200,302'
     alb.ingress.kubernetes.io/healthcheck-path: /health
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:880076045111:certificate/b08ddabe-0314-42dc-bdbf-8701d3993c69
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
     external-dns.alpha.kubernetes.io/hostname: preview.kimdongju.site
   hosts:
     - host: preview.kimdongju.site
       paths:
         - path: /api
           pathType: Prefix
-  tls: []
+  tls:
+    - hosts:
+        - preview.kimdongju.site
 
 ### ConfigMap
 configMap:
@@ -138,7 +145,8 @@ configMap:
     AWS_IMAGE_RESIZED_BUCKET: soundory-resized
     AWS_AUDIO_BUCKET_URL: https://soundory-audio.s3.ap-northeast-2.amazonaws.com/
     AWS_IMAGE_ORIGIN_BUCKET_URL: https://soundory-origin.s3.ap-northeast-2.amazonaws.com/
-    AWS_IMAGE_RESIZED_BUCKET_URL: https://soundory-resized.s3.ap-northeast-2.amazonaws.com/
+    # 이름변경 필요
+    AWS_IMAGE_RESIZED_BUCKET_URL: https://d1bkhpnpv1ny2t.cloudfront.net/
     CF_ACCESS_KEY_ID: KTWE520OTSGSX
     CF_PRIVATE_KEY_PATH: /app/src/keys/cloudfront-private-key.pem  
     NODE_ENV: development

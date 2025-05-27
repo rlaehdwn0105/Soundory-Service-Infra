@@ -8,7 +8,7 @@ kube-prometheus-stack:
   prometheus:
     enabled: true
     prometheusSpec:
-      retention: 7d
+      # retention: 7d
       serviceMonitorSelectorNilUsesHelmValues: true
       podMonitorSelectorNilUsesHelmValues: true
       ruleSelectorNilUsesHelmValues: true
