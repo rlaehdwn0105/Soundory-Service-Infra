@@ -47,12 +47,20 @@ spec:
             httpGet:
               path: {{ .Values.probes.liveness.path }}
               port: {{ .Values.container.port }}
+            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds | default 5 }}
+            periodSeconds: {{ .Values.probes.liveness.periodSeconds | default 10 }}
+            timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds | default 3 }}
+            failureThreshold: {{ .Values.probes.liveness.failureThreshold | default 5 }}
           {{- end }}
           {{- if .Values.probes.readiness.enabled }}
           readinessProbe:
             httpGet:
               path: {{ .Values.probes.readiness.path }}
               port: {{ .Values.container.port }}
+            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds | default 5 }}
+            periodSeconds: {{ .Values.probes.liveness.periodSeconds | default 10 }}
+            timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds | default 3 }}
+            failureThreshold: {{ .Values.probes.liveness.failureThreshold | default 5 }}
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
