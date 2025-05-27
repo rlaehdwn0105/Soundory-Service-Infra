@@ -57,11 +57,10 @@ probes:
   liveness:
     enabled: true
     path: /health
-    port: 8001
   readiness:
     enabled: true
     path: /health
-    port: 8001
+
 
 metrics:
   enabled: false
@@ -155,7 +154,7 @@ configMap:
     AWS_IMAGE_RESIZED_BUCKET_URL: https://d1bkhpnpv1ny2t.cloudfront.net/
     CF_ACCESS_KEY_ID: KTWE520OTSGSX
     CF_PRIVATE_KEY_PATH: /app/src/keys/cloudfront-private-key.pem  
-    NODE_ENV: development
+    NODE_ENV: production
     DIST_URL: https://de136mx4etflr.cloudfront.net
 
 ### Secret 
