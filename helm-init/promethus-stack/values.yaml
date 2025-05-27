@@ -13,6 +13,7 @@ kube-prometheus-stack:
       podMonitorSelectorNilUsesHelmValues: true
       ruleSelectorNilUsesHelmValues: true
       enableRemoteWriteReceiver: true
+      maximumStartupDurationSeconds: 300
       remoteWrite:
         - url: http://mimir-nginx.mimir.svc.cluster.local/api/v1/push
           headers:

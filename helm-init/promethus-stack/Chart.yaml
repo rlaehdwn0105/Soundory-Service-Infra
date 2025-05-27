@@ -3,9 +3,9 @@ name: sondory-monitoring-stack
 description: Custom Prometheus Operator stack connected to Grafana Mimir
 type: application
 version: 0.1.0
-appVersion: v0.82.0
+appVersion: v0.82.2
 
 dependencies:
   - name: kube-prometheus-stack
-    version: "71.2.0"
+    version: "72.6.2"
     repository: https://prometheus-community.github.io/helm-charts
